@@ -1,64 +1,47 @@
 package app.com.example.lpolepeddi.asetemplate;
 
+
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.wearable.activity.WearableActivity;
-import android.support.wearable.view.BoxInsetLayout;
-import android.view.View;
-import android.widget.TextView;
+import android.support.wearable.view.WearableListView;
+import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-public class MainActivity extends WearableActivity {
-
-    private static final SimpleDateFormat AMBIENT_DATE_FORMAT =
-            new SimpleDateFormat("HH:mm", Locale.US);
-
-    private BoxInsetLayout mContainerView;
-    private TextView mTextView;
-    private TextView mClockView;
+public class MainActivity extends Activity implements WearableListView.ClickListener {
+    // Sample dataset for the list
+    String[] elements = {
+            "Group 1",
+            "Group 2",
+            "Group 3",
+            "Group 4"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setAmbientEnabled();
 
-        mContainerView = (BoxInsetLayout) findViewById(R.id.container);
-        mTextView = (TextView) findViewById(R.id.text);
-        mClockView = (TextView) findViewById(R.id.clock);
+        // Get the list component from the layout of the activity
+        WearableListView listView = (WearableListView) findViewById(R.id.wearable_list);
+
+        // Assign an adapter to the list
+        listView.setAdapter(new ListAdapter(this, elements));
+
+        // Set a click listener
+        listView.setClickListener(this);
+    }
+
+    // WearableListView click listener
+    @Override
+    public void onClick(WearableListView.ViewHolder v) {
+        Integer tag = (Integer) v.itemView.getTag();
+
+        // temp
+        Toast.makeText(this, "Clicked item", Toast.LENGTH_SHORT).show();
+
+        // use this data to complete some action ...
     }
 
     @Override
-    public void onEnterAmbient(Bundle ambientDetails) {
-        super.onEnterAmbient(ambientDetails);
-        updateDisplay();
-    }
-
-    @Override
-    public void onUpdateAmbient() {
-        super.onUpdateAmbient();
-        updateDisplay();
-    }
-
-    @Override
-    public void onExitAmbient() {
-        updateDisplay();
-        super.onExitAmbient();
-    }
-
-    private void updateDisplay() {
-        if (isAmbient()) {
-            mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
-            mTextView.setTextColor(getResources().getColor(android.R.color.white));
-            mClockView.setVisibility(View.VISIBLE);
-
-            mClockView.setText(AMBIENT_DATE_FORMAT.format(new Date()));
-        } else {
-            mContainerView.setBackground(null);
-            mTextView.setTextColor(getResources().getColor(android.R.color.black));
-            mClockView.setVisibility(View.GONE);
-        }
+    public void onTopEmptyRegionClick() {
     }
 }
