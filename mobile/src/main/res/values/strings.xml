@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ASE Template</string>
     <string name="action_settings">Settings</string>
+
+    <string name="directionsLabel">Directions</string>
+    <string name="joinLabel">Join Group</string>
+    <string name="ignoreLabel">Ignore</string>
 </resources>
