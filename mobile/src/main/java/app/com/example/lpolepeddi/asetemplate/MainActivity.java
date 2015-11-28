@@ -104,4 +104,50 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
+    public void sendGroupInvitationNotification(View view) {
+
+        /*
+        * 1. Create an intent that will be fired when the user clicks the notification.
+        * The intent needs to be packaged into a {@link android.app.PendingIntent} so that the
+        * notification service can fire it on our behalf.
+        */
+
+        // TODO: This intent needs to call updateGroup(groupId) if someone joins a group; currently tapping the notification will open the Android docs
+        // TODO: how to show trigger two separate intents for join v ignore?
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://developer.android.com/reference/android/app/Notification.html"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        // 2. Create the wearable-specific action
+        NotificationCompat.Action joinAction = new NotificationCompat.Action.Builder(R.drawable.ic_check, getString(R.string.joinLabel), pendingIntent).build();
+        NotificationCompat.Action ignoreAction = new NotificationCompat.Action.Builder(R.drawable.ic_close, getString(R.string.ignoreLabel), pendingIntent).build();
+
+
+        // 3. Build the notification. We'll call methods on this to set it up
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        // 4. Set the icon that will appear in the notification bar
+        builder.setSmallIcon(R.drawable.ic_stat_notification);
+
+        // 5. Tell the notification what intent to use (the one we created earlier) when the user taps the notification.
+        builder.setContentIntent(pendingIntent);
+
+        // 6. Tell the notification to disappear after the user taps on it
+        builder.setAutoCancel(true);
+
+        // 7. Set the large icon, which appears on the left of the notification.
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+
+        // 8. Set the text of the notification.
+        builder.setContentTitle("New group invitation");
+        builder.setContentText("Lalith Polepeddi has invited you to join their group");
+
+        // 9. Extend the notification with the action
+        builder.extend(new NotificationCompat.WearableExtender().addAction(joinAction).addAction(ignoreAction));
+
+        // 10. Send the notification. This will immediately display the notification icon in the bar
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
 }
