@@ -8,11 +8,20 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements WearableListView.ClickListener {
     // Sample dataset for the list
-    String[] elements = {
-            "Group 1",
-            "Group 2",
-            "Group 3",
-            "Group 4"
+    GroupMember[] g1 = new GroupMember[] {
+            new GroupMember("Harshit Sharma", 33.777187, -84.397421, 1448582400),
+            new GroupMember("Mayank Gupta", 33.777189, -84.397423, 1448582400),
+            new GroupMember("Chris Ernst", 33.777191, -84.397425, 1448582400)
+    };
+    GroupMember[] g2 = new GroupMember[] {
+            new GroupMember("Person 1", 33.777187, -84.397421, 1448582400),
+            new GroupMember("Person 2", 33.777185, -84.397419, 1448582400),
+            new GroupMember("Person 3", 33.777181, -84.397417, 1448582400),
+            new GroupMember("Person 4", 33.777179, -84.397415, 1448582400)
+    };
+    Group[] groupData = new Group[] {
+            new Group("Group 1", 1448582400, g1),
+            new Group("Group 2", 1448582400, g2),
     };
 
     @Override
@@ -24,7 +33,7 @@ public class MainActivity extends Activity implements WearableListView.ClickList
         WearableListView listView = (WearableListView) findViewById(R.id.wearable_list);
 
         // Assign an adapter to the list
-        listView.setAdapter(new ListAdapter(this, elements));
+        listView.setAdapter(new ListAdapter(this, groupData));
 
         // Set a click listener
         listView.setClickListener(this);

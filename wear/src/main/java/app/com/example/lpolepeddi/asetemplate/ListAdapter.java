@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class ListAdapter extends WearableListView.Adapter {
-    private String[] mDataset;
+    // private String[] mDataset;
+    private Group[] groupDataset;
     private final Context mContext;
     private final LayoutInflater mInflater;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ListAdapter(Context context, String[] dataset) {
+    public ListAdapter(Context context, Group[] dataset) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mDataset = dataset;
+        groupDataset = dataset;
     }
 
     // Provide a reference to the type of views you're using
@@ -48,7 +49,7 @@ public class ListAdapter extends WearableListView.Adapter {
         ItemViewHolder itemHolder = (ItemViewHolder) holder;
         TextView view = itemHolder.textView;
         // replace text contents
-        view.setText(mDataset[position]);
+        view.setText(groupDataset[position].name);
         // replace list item's metadata
         holder.itemView.setTag(position);
     }
@@ -57,6 +58,6 @@ public class ListAdapter extends WearableListView.Adapter {
     // (invoked by the WearableListView's layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return groupDataset.length;
     }
 }
