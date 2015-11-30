@@ -150,4 +150,11 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
+
+    public void openGroupLocation (View view) {
+        Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
+//        myIntent.putExtra("key", value); //Optional parameters
+        MainActivity.this.startActivity(myIntent);
+    }
 }

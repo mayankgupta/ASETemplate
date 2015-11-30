@@ -5,4 +5,5 @@
     <string name="directionsLabel">Directions</string>
     <string name="joinLabel">Join Group</string>
     <string name="ignoreLabel">Ignore</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
